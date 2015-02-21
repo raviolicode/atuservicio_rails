@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
 
   def load_options
     @states ||= State.all
-    @providers ||= Provider.all
+    @providers ||= Provider.order(:nombre_completo).all
   end
 end

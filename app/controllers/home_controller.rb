@@ -18,7 +18,7 @@ class HomeController < ApplicationController
       format.json do
         render json: {
           providers: @sel_providers,
-          states: State.all.select(:id, :name, :path),
+          states: State.order(:name).select(:id, :name, :path),
           lookup_by_state: State.all.inject({}) do |lookup, state|
             lookup.merge({ "#{state.id}" => state.providers.map(&:id) })
           end
