@@ -26,7 +26,19 @@ namespace :db do
     end
   end
 
-  task :load_providers_states => [:environment, :import_sites] do
+  desc "Provider path names"
+  task :path_names => [:environment, :import_sites] do
+    puts "Path names by state"
+    State.all.each do |state|
+      sanitized_name = state.name
+        .downcase
+        .gsub("í", "i").gsub("é", "e").gsub("ó", "o").gsub("ú", "u").gsub(" ", "_")
+
+      state.update(path: sanitized_name)
+    end
+  end
+
+  task :load_providers_states => [:environment, :import_sites, :path_names] do
     puts "import Provider State info"
     ProviderStateInfo.all.each do |info|
       level_count = Site.where(state_id: info.state_id,
