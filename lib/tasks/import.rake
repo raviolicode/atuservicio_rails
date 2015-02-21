@@ -18,7 +18,11 @@ namespace :db do
     ProviderStateInfo.delete_all
     Site.delete_all
     import_csv('sedes') do |provider, parameters|
-      state = State.find_or_create_by(name: parameters['departamento'])
+      # TODO: fix the DATA!!!!
+      state_name = parameters["departamento"]
+      state_name = "San José" if state_name == "San Jose"
+
+      state = State.find_or_create_by(name: state_name)
       ProviderStateInfo.find_or_create_by(provider: provider, state: state)
       provider.sites.create(parameters.merge(state: state))
       # provider.states << state
