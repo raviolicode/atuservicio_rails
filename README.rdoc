@@ -7,5 +7,12 @@ bundle
 ```
 2. Load database (postgres)
 ```
-rake db:setup db:import
+rake db:setup
+rake db:import
 ```
+
+3. Export JSON data
+```
+rake json:export
+```
+All the state infos are in `tmp/`
