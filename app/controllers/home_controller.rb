@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
     @sel_providers = @providers
-    @selected_state = State.find_by_name(params['departamento'].try(:capitalize))
+    @selected_state = State.find_by_name(params['departamento'].try(:titleize))
     @sel_providers = @sel_providers.where(id: @selected_state.providers) if @selected_state
 
     # order
